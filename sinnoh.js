@@ -36,7 +36,14 @@ const createPokemonCard = (pokemon) => {
   const pokemonEl = document.createElement("div");
   pokemonEl.classList.add("pokemon");
 
-  const name = pokemon.name[0].toUpperCase() + pokemon.name.slice(1);
+  let name = pokemon.name[0].toUpperCase() + pokemon.name.slice(1);
+  let tempName = "";
+  if (name.includes("-") && name.length > 12) {
+    const index = name.indexOf("-");
+    tempName = name.slice(0, index);
+    console.log(tempName);
+    name = tempName;
+  }
   const id = pokemon.id.toString().padStart(3, "0");
 
   const poke_types = pokemon.types.map((type) => type.type.name);
