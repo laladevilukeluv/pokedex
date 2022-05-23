@@ -1,5 +1,5 @@
 const poke_container = document.getElementById("poke-container");
-const pokemon_count = 493;
+const pokemon_count = 649;
 const colors = {
   fire: "#E97451",
   steel: "#D3D3D3",
@@ -24,7 +24,7 @@ const colors = {
 const main_types = Object.keys(colors);
 
 const fetchPokemons = async () => {
-  for (let i = 387; i <= pokemon_count; i++) {
+  for (let i = 494; i <= pokemon_count; i++) {
     await getPokemon(i);
   }
 };

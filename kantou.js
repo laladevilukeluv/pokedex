@@ -1,20 +1,22 @@
 const poke_container = document.getElementById("poke-container");
 const pokemon_count = 151;
 const colors = {
-  fire: "#FDDFDF",
+  fire: "#E97451",
+  bug: "#C9CC3F",
   grass: "#DEFDE0",
-  electric: "#FCF7DE",
+  electric: "#FFEA00",
   water: "#DEF3FD",
-  ground: "#f4e7da",
-  rock: "#d5d5d4",
-  fairy: "#fceaff",
+  ghost: "#DA70D6",
   poison: "#E0B0FF",
-  bug: "#f8d5a3",
+  ground: "#f4e7da",
+  rock: "#C2B280",
   dragon: "#97b3e6",
-  psychic: "#eaeda1",
+  ice: "#A5F2F3",
+  psychic: "#FFB6C1",
   flying: "#F5F5F5",
-  fighting: "#E6E0D4",
+  fighting: "#E34234",
   normal: "#F5F5F5",
+  fairy: "#fceaff",
 };
 
 const main_types = Object.keys(colors);
@@ -45,10 +47,17 @@ const createPokemonCard = (pokemon) => {
     name = tempName;
   }
   const id = pokemon.id.toString().padStart(3, "0");
+  let poke_types = pokemon.types.map((type) => type.type.name);
+  console.log(poke_types);
+  let type = main_types.find((element) => poke_types.indexOf(element) == 0);
+  console.log(type);
+  let mainColor = type;
+  if (poke_types.length == 2) {
+    const anotherType = poke_types[1];
+    type = poke_types[0] + "/" + anotherType;
+  }
 
-  const poke_types = pokemon.types.map((type) => type.type.name);
-  const type = main_types.find((type) => poke_types.indexOf(type) > -1);
-  const color = colors[type];
+  const color = colors[mainColor];
 
   pokemonEl.style.backgroundColor = color;
 
