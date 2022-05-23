@@ -38,7 +38,7 @@ const createPokemonCard = (pokemon) => {
 
   let name = pokemon.name[0].toUpperCase() + pokemon.name.slice(1);
   let tempName = "";
-  if (name.includes("-") && name.length > 12) {
+  if (name.includes("-") && name.length >= 12) {
     const index = name.indexOf("-");
     tempName = name.slice(0, index);
     console.log(tempName);
