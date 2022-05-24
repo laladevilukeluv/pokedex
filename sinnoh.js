@@ -17,6 +17,8 @@ const colors = {
   fighting: "#E34234",
   normal: "#F5F5F5",
   fairy: "#fceaff",
+  steel: "#C0C0C0",
+  dark: "#966919",
 };
 
 const mainTypes = Object.keys(colors);

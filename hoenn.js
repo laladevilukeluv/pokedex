@@ -14,9 +14,11 @@ const colors = {
   ice: "#A5F2F3",
   psychic: "#FFB6C1",
   flying: "#F5F5F5",
-  fighting: "#E34234",
+  fighting: "#d45348",
   normal: "#F5F5F5",
   fairy: "#fceaff",
+  steel: "#C0C0C0",
+  dark: "#966919",
 };
 
 const mainTypes = Object.keys(colors);
