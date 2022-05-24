@@ -1,5 +1,5 @@
-const poke_container = document.getElementById("poke-container");
-const pokemon_count = 151;
+const pokeContainer = document.querySelector("#poke-container");
+const pokemonCount = 151;
 const colors = {
   fire: "#E97451",
   bug: "#C9CC3F",
@@ -19,19 +19,21 @@ const colors = {
   fairy: "#fceaff",
 };
 
-const main_types = Object.keys(colors);
+const mainTypes = Object.keys(colors);
 
-const fetchPokemons = async () => {
-  for (let i = 1; i <= pokemon_count; i++) {
+const axiosPokemons = async () => {
+  for (let i = 1; i <= pokemonCount; i++) {
     await getPokemon(i);
   }
 };
 
 const getPokemon = async (id) => {
-  const url = `https://pokeapi.co/api/v2/pokemon/${id}`;
-  const res = await fetch(url);
-  const data = await res.json();
-  createPokemonCard(data);
+  try {
+    const res = await axios.get(`https://pokeapi.co/api/v2/pokemon/${id}`);
+    createPokemonCard(res.data);
+  } catch (e) {
+    console.log("ERROR", e);
+  }
 };
 
 const createPokemonCard = (pokemon) => {
@@ -43,18 +45,15 @@ const createPokemonCard = (pokemon) => {
   if (name.includes("-") && name.length >= 12) {
     const index = name.indexOf("-");
     tempName = name.slice(0, index);
-    console.log(tempName);
     name = tempName;
   }
   const id = pokemon.id.toString().padStart(3, "0");
-  let poke_types = pokemon.types.map((type) => type.type.name);
-  console.log(poke_types);
-  let type = main_types.find((element) => poke_types.indexOf(element) == 0);
-  console.log(type);
+  let pokeTypes = pokemon.types.map((type) => type.type.name);
+  let type = mainTypes.find((element) => pokeTypes.indexOf(element) == 0);
   let mainColor = type;
-  if (poke_types.length == 2) {
-    const anotherType = poke_types[1];
-    type = poke_types[0] + "/" + anotherType;
+  if (pokeTypes.length == 2) {
+    const anotherType = pokeTypes[1];
+    type = pokeTypes[0] + "/" + anotherType;
   }
 
   const color = colors[mainColor];
@@ -73,8 +72,7 @@ const createPokemonCard = (pokemon) => {
     `;
 
   pokemonEl.innerHTML = pokemonInnerHTML;
-
-  poke_container.appendChild(pokemonEl);
+  pokeContainer.appendChild(pokemonEl);
 };
 function myFunction() {
   var x = document.getElementById("myTopnav");
@@ -85,4 +83,4 @@ function myFunction() {
   }
 }
 
-fetchPokemons();
+axiosPokemons();

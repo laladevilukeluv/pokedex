@@ -1,39 +1,39 @@
-const poke_container = document.getElementById("poke-container");
-const pokemon_count = 493;
+const pokeContainer = document.querySelector("#poke-container");
+const pokemonCount = 493;
 const colors = {
   fire: "#E97451",
-  steel: "#D3D3D3",
-  rock: "#C2B280",
   bug: "#C9CC3F",
-  water: "#DEF3FD",
   grass: "#DEFDE0",
-  dark: "#C4A484",
   electric: "#FFEA00",
+  water: "#DEF3FD",
   ghost: "#DA70D6",
   poison: "#E0B0FF",
   ground: "#f4e7da",
+  rock: "#C2B280",
   dragon: "#97b3e6",
   ice: "#A5F2F3",
-  fighting: "#E34234",
   psychic: "#FFB6C1",
   flying: "#F5F5F5",
+  fighting: "#E34234",
   normal: "#F5F5F5",
   fairy: "#fceaff",
 };
 
-const main_types = Object.keys(colors);
+const mainTypes = Object.keys(colors);
 
-const fetchPokemons = async () => {
-  for (let i = 387; i <= pokemon_count; i++) {
+const axiosPokemons = async () => {
+  for (let i = 387; i <= pokemonCount; i++) {
     await getPokemon(i);
   }
 };
 
 const getPokemon = async (id) => {
-  const url = `https://pokeapi.co/api/v2/pokemon/${id}`;
-  const res = await fetch(url);
-  const data = await res.json();
-  createPokemonCard(data);
+  try {
+    const res = await axios.get(`https://pokeapi.co/api/v2/pokemon/${id}`);
+    createPokemonCard(res.data);
+  } catch (e) {
+    console.log("ERROR", e);
+  }
 };
 
 const createPokemonCard = (pokemon) => {
@@ -45,18 +45,15 @@ const createPokemonCard = (pokemon) => {
   if (name.includes("-") && name.length >= 12) {
     const index = name.indexOf("-");
     tempName = name.slice(0, index);
-    console.log(tempName);
     name = tempName;
   }
   const id = pokemon.id.toString().padStart(3, "0");
-
-  let poke_types = pokemon.types.map((type) => type.type.name);
-  console.log(poke_types);
-  let type = main_types.find((element) => poke_types.indexOf(element) == 0);
+  let pokeTypes = pokemon.types.map((type) => type.type.name);
+  let type = mainTypes.find((element) => pokeTypes.indexOf(element) == 0);
   let mainColor = type;
-  if (poke_types.length == 2) {
-    const anotherType = poke_types[1];
-    type = poke_types[0] + "/" + anotherType;
+  if (pokeTypes.length == 2) {
+    const anotherType = pokeTypes[1];
+    type = pokeTypes[0] + "/" + anotherType;
   }
 
   const color = colors[mainColor];
@@ -75,8 +72,7 @@ const createPokemonCard = (pokemon) => {
     `;
 
   pokemonEl.innerHTML = pokemonInnerHTML;
-
-  poke_container.appendChild(pokemonEl);
+  pokeContainer.appendChild(pokemonEl);
 };
 function myFunction() {
   var x = document.getElementById("myTopnav");
@@ -87,4 +83,4 @@ function myFunction() {
   }
 }
 
-fetchPokemons();
+axiosPokemons();
