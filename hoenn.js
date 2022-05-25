@@ -61,7 +61,26 @@ const createPokemonCard = (pokemon) => {
   const color = colors[mainColor];
 
   pokemonEl.style.backgroundColor = color;
-
+  const searchBar = document.forms["searchPokemon"].querySelector("input");
+  searchBar.addEventListener("keyup", function (e) {
+    const term = e.target.value;
+    if (name.toLowerCase() == term.toLowerCase()) {
+      console.log(pokeContainer);
+      pokeContainer.innerHTML = "";
+      const pokemonInnerHTML = `
+        <div class="img-container">
+        <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.id}.png" alt="">
+        </div>
+        <div class="info">
+            <span class="number">#${id}</span>
+            <h3 class="name">${name}</h3>
+            <small class="type">Type: <span>${type}</span> </small>
+        </div>
+        `;
+      pokemonEl.innerHTML = pokemonInnerHTML;
+      pokeContainer.appendChild(pokemonEl);
+    }
+  });
   const pokemonInnerHTML = `
     <div class="img-container">
     <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.id}.png" alt="">
